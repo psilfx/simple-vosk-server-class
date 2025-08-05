@@ -11,7 +11,7 @@ class VoskServer:
     # Папка для сохранения файлов текста
     textdir = 'text'
     # Разрешенные типы данных
-    allowed = [ '.mp3' , '.ogg' , '.wav' ]
+    allowed = [ '.mp3' , '.ogg' , '.wav' , '.oga' ]
     def __init__( self , model ) :
         self.model = Model( model )
         os.makedirs( self.filedir , exist_ok = True )
@@ -68,6 +68,10 @@ class VoskServer:
             if speechrec.AcceptWaveform( data ) :
                 obj = json.loads( speechrec.Result() )
                 result.append( obj[ 'text' ] )
+        # Получаем финальный результат
+        final = json.loads( speechrec.FinalResult() )
+        if final.get( 'text' ) :
+            result.append( final[ 'text' ] )
         # Собираем массив в текст
         speechtext = ", ".join( str( e ) for e in result )
         with open( f"{ self.textdir }/{ path }.txt" , 'w' , encoding = 'utf-8' ) as f :
