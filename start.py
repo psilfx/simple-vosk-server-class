@@ -5,8 +5,8 @@ import vosk_server
 app = Flask( __name__ )
 CORS( app )
 # Инициализация класса сервера
-server = vosk_server.VoskServer( "vosk-model-small-ru-0.22" )
-# server = vosk_server.VoskServer( "vosk-model-ru-0.42" )
+# server = vosk_server.VoskServer( "vosk-model-small-ru-0.22" )
+server = vosk_server.VoskServer( "vosk-model-ru-0.42" )
 # Добавляем обработку запроса на stt
 @app.route( '/stt' , methods = [ 'POST' ] )
 def stt() :
